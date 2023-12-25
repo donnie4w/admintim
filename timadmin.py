@@ -43,10 +43,18 @@ def httpPost(isSSL, data, host, port, uri, username, pwd) -> bytes:
 
 # get token for login
 # 获取登录的token
-def test_timToken():
-    data = {'name': 'jerry', 'domain': 'tlnet.top'}
-    bs = httpPost(False, JEncode(data), "192.168.2.11", 6144, "/timToken", 'admin', '123')
-    print(JDecode(bs))
+def test_timTokenByNode():
+    data = {'name': 'UHuS8PoK2Mi', 'domain': 'tlnet.top'}
+    bs = httpPost(False, JEncode(data), "192.168.2.11", 8001, "/timToken", 'admin', '123')
+    print(JDecode(bs))  # {'ok': True, 'timType': 15, 't': 4980027571988070413, 'n': 'UHuS8PoK2Mi'}
+
+
+# get token for login
+# 获取登录的token
+def test_timTokenByLoginNameAndPwd():
+    data = {'name': 'tim1', 'password': '123', 'domain': 'tlnet.top'}
+    bs = httpPost(False, JEncode(data), "192.168.2.11", 8001, "/timToken", 'admin', '123')
+    print(JDecode(bs))  # {'ok': True, 'timType': 15, 't': 2634202115215458314, 'n': 'UHuS8PoK2Mi'}
 
 
 # send the system message to user  发送系统信息给用户
@@ -136,3 +144,9 @@ def test_timModifyUserInfo():
     li = JDecode(bs)
     print("length>>", len(li))
     print(bs.decode('utf-8'))  # server return {"ok":true,"timType":0}
+
+
+def test_timVroomRegister():
+    data = {'node': 'UHuS8PoK2Mi', 'rtype': 1}
+    bs = httpPost(False, JEncode(data), "192.168.2.11", 8001, "/timVroom", 'admin', '123')
+    print(bs)
